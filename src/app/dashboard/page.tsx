@@ -1,11 +1,14 @@
-import DashboardSection from '@/sections/dashboard'
-import { NextPage } from 'next'
-import React from 'react'
+import Layout from "@/layout";
+import DashboardSection from "@/sections/dashboard";
+import { NextPage } from "next";
+import React from "react";
 
 const Dashboard: NextPage = () => {
   return (
-    <DashboardSection />
-  )
-}
+    <Layout title="Dashboard">
+      <DashboardSection />
+    </Layout>
+  );
+};
 
-export default Dashboard
+export default Dashboard;
