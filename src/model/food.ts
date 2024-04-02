@@ -10,6 +10,7 @@ export interface Hint {
 }
 
 export interface Food {
+  id: string; //document id in firestore
   foodId: string;
   label: string;
   knownAs: string;
