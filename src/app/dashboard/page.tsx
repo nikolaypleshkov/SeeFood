@@ -1,5 +1,5 @@
 import Layout from "@/layout";
-import DashboardSection from "@/sections/dashboard";
+import DashboardSection from "@/sections/dashboard/dashboard";
 import { NextPage } from "next";
 import React from "react";
 
