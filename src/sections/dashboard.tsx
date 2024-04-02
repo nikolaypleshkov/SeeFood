@@ -6,9 +6,30 @@ import React from "react";
 const DashboardSection = () => {
   const [searchIngr, setSearchIngr] = React.useState<string>("");
   const [foods, setFoods] = React.useState<Hint[] | null>(null);
+  const [selectedFood, setSelectedFood] = React.useState<Food[] | null>(null);
 
   const handleSearchIngr = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchIngr(e.target.value);
+  };
+
+  const handleSelectFood = (food: Food) => {
+    // find if selected food already exist in selectedFood list
+    if (selectedFood && selectedFood?.length) {
+      const selectedFoodIndex = selectedFood?.find((f) =>
+        f.foodId.includes(food.foodId)
+      );
+
+      if (selectedFoodIndex) {
+        const filteredFoods = selectedFood.filter((f) =>
+          f.foodId.includes(food.foodId)
+        );
+        setSelectedFood(filteredFoods);
+      } else {
+        setSelectedFood((prev) => [...prev, food]);
+      }
+    } else {
+      setSelectedFood([food]);
+    }
   };
 
   const fetchIngredients = async (params: string) => {
@@ -61,6 +82,11 @@ const DashboardSection = () => {
               />
             </div>
           </div>
+          <div className="mt-4 w-full">
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-1 px-4 w-32 rounded-md">
+              Add
+            </button>
+          </div>
         </div>
         <table className="min-w-full">
           <thead className="bg-gray-50">
@@ -87,11 +113,31 @@ const DashboardSection = () => {
             {foods &&
               foods.map((food) => (
                 <tr key={food.food.label} className="hover:bg-gray-100">
-                  <td className="p-4">{food.food.label}</td>
-                  <td className="p-4">{food.food.nutrients.ENERC_KCAL}</td>
-                  <td className="p-4">{food.food.nutrients.PROCNT}</td>
-                  <td className="p-4">{food.food.nutrients.FAT}</td>
-                  <td className="p-4">{food.food.nutrients.CHOCDF}</td>
+                  <td className="p-4">
+                    {/* add checkbox */}
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        className="w-4 h-4 text-indigo-600 border-gray-300 rounded bg-white checked:bg-indigo-600 checked:border-indigo-600"
+                        onClick={() => handleSelectFood(food.food)}
+                      />
+                      <span className="ml-2 text-gray-700 font-semibold">
+                        {food.food.label}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="p-4">
+                    {Math.round(food.food.nutrients.ENERC_KCAL)} kcal
+                  </td>
+                  <td className="p-4">
+                    {Math.round(food.food.nutrients.PROCNT)}g
+                  </td>
+                  <td className="p-4">
+                    {Math.round(food.food.nutrients.FAT)}g
+                  </td>
+                  <td className="p-4">
+                    {Math.round(food.food.nutrients.CHOCDF)}g
+                  </td>
                 </tr>
               ))}
           </tbody>
