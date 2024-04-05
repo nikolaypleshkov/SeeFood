@@ -97,7 +97,7 @@ const FirebaseFoods: React.FC = () => {
         <tbody>
           {fetchedFoods &&
             fetchedFoods.map((food) => (
-              <tr key={food.label} className="hover:bg-gray-100">
+              <tr key={food.id} className="hover:bg-gray-100">
                 <td className="p-4">{food.label}</td>
                 <td className="p-4">
                   {Math.round(food.nutrients.ENERC_KCAL)} kcal

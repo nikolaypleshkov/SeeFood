@@ -132,8 +132,8 @@ const FoodList: React.FC = () => {
 
         <tbody>
           {foods &&
-            foods.map((food) => (
-              <tr key={food.food.label} className="hover:bg-gray-100">
+            foods.map((food, i) => (
+              <tr key={`${food.food.id}-${i}`} className="hover:bg-gray-100">
                 <td className="p-4">
                   {/* add checkbox */}
                   <div className="flex items-center">
